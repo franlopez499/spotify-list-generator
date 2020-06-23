@@ -53,7 +53,7 @@ class Profile extends React.Component {
     console.log('usersReady', usersReady);
     console.log('users', users);
     */
-   console.log(imageUrl);
+   
    
     if (!loggedIn) {
       return null;
