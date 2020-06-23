@@ -1,0 +1,15 @@
+.landing-page {
+  position: relative;
+  //display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;  //80vh
+  font-size: 44px;
+  h1 {
+    color: #333;
+  }
+}
+
+body {
+  overflow: hidden;
+}
