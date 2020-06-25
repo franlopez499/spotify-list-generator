@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
+import CardDeck from 'react-bootstrap/CardDeck';
 
 // collection
 //import { Points } from '../../../api/points/points';
@@ -17,6 +18,7 @@ import Users from '../../../api/remote/users';
 import ModalInput, { Button } from '../../components/ModalInput/ModalInput'
 
 import './Profile.scss';
+import Playlist from '../../components/Playlist';
 class Profile extends React.Component {
   
 
@@ -24,7 +26,6 @@ class Profile extends React.Component {
     super(props);
      
     this.state = {
-      
       playlists: [],
       password: '',
       errMsg: null,
@@ -46,8 +47,16 @@ class Profile extends React.Component {
     }
     return true;
   }
-  getPlaylist(){
+
+  getReactPlaylists(){
     const items = [];
+    this.state.playlists.forEach(p => {
+      items.push(<Playlist key={p.id} image={p.images[0].url} name={p.name} owner={p.owner.display_name} id={p.id} tracksHref={p.tracks.href}/>);   
+     });
+    return items;
+  }
+  getPlaylist(){
+    
     if(Meteor.user()){
       
       console.log(Meteor.user());
@@ -58,11 +67,8 @@ class Profile extends React.Component {
         
       });
 
-      // Falta crear componente playlist y retornar lista de componentes playlists.
-
-      //this.state.playlists.forEach()
+   
     }
-
 
   }
   render() {
@@ -73,18 +79,21 @@ class Profile extends React.Component {
       // users,
      
     } = this.props;
-    if (!loggedIn || !Meteor.user() || this.state.playlists.length === 0) {
+    if (!loggedIn || !Meteor.user() || this.state.playlists.length === 0 ) {
       return null;
     }
     
     let imageUrl = Meteor.user().profile.images[0].url;
-   
-  
+    
+    console.log(this.state.playlists);
+    const reactPlaylists = this.getReactPlaylists();
     return (
       <div className="home-page">
         <h1>Home</h1>
         <Button target="userId" type="primary" title="Click para insertar nuevo aviso" />
-        
+        <CardDeck>
+          {reactPlaylists}
+        </CardDeck>
         <img border="0" alt="ProfilePic" src={imageUrl} width="100" height="100"></img>
         
         

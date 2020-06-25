@@ -38,7 +38,7 @@ const LoggedInNav = () => (
     <li className="nav-item">
       <NavLink to="/profile">
         <button type="button" className="dropdown-item">
-          Profile
+          Home
         </button>
       </NavLink>
     </li>
