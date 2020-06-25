@@ -39,5 +39,5 @@ jquery
 meteortesting:mocha
 ostrio:files
 matb33:collection-hooks
-xinranxiao:accounts-spotify
 xinranxiao:spotify-web-api
+xinranxiao:accounts-spotify

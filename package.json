@@ -18,7 +18,7 @@
     "@babel/runtime": "^7.9.2",
     "bcrypt": "^3.0.7",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "meteor-node-stubs": "^0.4.1",
@@ -29,7 +29,8 @@
     "react-leaflet": "^2.6.3",
     "react-router-dom": "^5.1.2",
     "recompose": "^0.30.0",
-    "simpl-schema": "^1.5.6"
+    "simpl-schema": "^1.5.6",
+    "spotify-web-api-js": "^1.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.8.3",

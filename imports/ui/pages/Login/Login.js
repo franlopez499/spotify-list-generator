@@ -47,7 +47,7 @@ class Login extends React.Component {
     Meteor.loginWithSpotify(options, function(err) {
       console.log(err || "No error");
     });
-   
+    
   }
   render() {
     if (this.props.loggedIn) {

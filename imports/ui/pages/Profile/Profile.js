@@ -4,7 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // collection
-import { Points } from '../../../api/points/points';
+//import { Points } from '../../../api/points/points';
+// import '../../../api/spotify/spotify.js';
 // remote example (if using ddp)
 /*
 import Remote from '../../../api/remote/ddp';
@@ -16,12 +17,26 @@ import Users from '../../../api/remote/users';
 import ModalInput, { Button } from '../../components/ModalInput/ModalInput'
 
 import './Profile.scss';
-
 class Profile extends React.Component {
+  
+
+  constructor(props) {
+    super(props);
+     
+    this.state = {
+      
+      playlists: [],
+      password: '',
+      errMsg: null,
+    };
+    
+    
+  }
   componentDidMount() {
     if (!this.props.loggedIn) {
       return this.props.history.push('/login');
     }
+    this.getPlaylist();
   }
 
   shouldComponentUpdate(nextProps) {
@@ -31,7 +46,25 @@ class Profile extends React.Component {
     }
     return true;
   }
+  getPlaylist(){
+    const items = [];
+    if(Meteor.user()){
+      
+      console.log(Meteor.user());
+      // Al llamar a una Api (Meteor.call), para utilizar this en su callback es necesario cachear la referencia a "this" fuera de la llamada a la API.
+      let self = this;
+      Meteor.call('getPlaylists', function (error, result) {
+         self.setState({playlists: result});
+        
+      });
 
+      // Falta crear componente playlist y retornar lista de componentes playlists.
+
+      //this.state.playlists.forEach()
+    }
+
+
+  }
   render() {
     const {
       loggedIn,
@@ -40,30 +73,19 @@ class Profile extends React.Component {
       // users,
      
     } = this.props;
-    let profileReady = false;
-    let imageUrl = "";
-    if(Meteor.user()){
-      profileReady = true;
-      imageUrl = Meteor.user().profile.images[0].url;
-    }
-    
-    // eslint-disable-line
-    // remote example (if using ddp)
-    /*
-    console.log('usersReady', usersReady);
-    console.log('users', users);
-    */
-   
-   
-    if (!loggedIn) {
+    if (!loggedIn || !Meteor.user() || this.state.playlists.length === 0) {
       return null;
     }
+    
+    let imageUrl = Meteor.user().profile.images[0].url;
+   
+  
     return (
       <div className="home-page">
         <h1>Home</h1>
         <Button target="userId" type="primary" title="Click para insertar nuevo aviso" />
         
-        <img border="0" alt="W3Schools" src={imageUrl} width="100" height="100"></img>
+        <img border="0" alt="ProfilePic" src={imageUrl} width="100" height="100"></img>
         
         
       </div>
@@ -86,6 +108,7 @@ Profile.propTypes = {
 
 export default withTracker(() => {
   //Meteor.subscribe('points');
+  Meteor.subscribe('users');
 
   return {
     // Encontramos en MongoDB todos ({}) y se puede filtrar con predicate o hacer sort
