@@ -2,20 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
-import CardDeck from 'react-bootstrap/CardDeck';
+import { CardDeck, Button, Form } from 'react-bootstrap';
 
 // collection
 //import { Points } from '../../../api/points/points';
 // import '../../../api/spotify/spotify.js';
 // remote example (if using ddp)
-/*
-import Remote from '../../../api/remote/ddp';
-import Users from '../../../api/remote/users';
-*/
 
 // components
 //import Modal, { Button } from '../../components/Modal/Modal';
-import ModalInput, { Button } from '../../components/ModalInput/ModalInput'
+//import { Button } from '../../components/ModalInput/ModalInput'
 
 import './Profile.scss';
 import Playlist from '../../components/Playlist';
@@ -74,28 +70,27 @@ class Profile extends React.Component {
   render() {
     const {
       loggedIn,
-      // remote example (if using ddp)
-      // usersReady,
-      // users,
      
     } = this.props;
     if (!loggedIn || !Meteor.user() || this.state.playlists.length === 0 ) {
       return null;
     }
     
-    let imageUrl = Meteor.user().profile.images[0].url;
+    //let imageUrl = Meteor.user().profile.images[0].url;
+    // <img id="profile-pic" alt="ProfilePic" src={imageUrl} width="200" height="200"></img>
     
     console.log(this.state.playlists);
     const reactPlaylists = this.getReactPlaylists();
     return (
       <div className="home-page">
-        <h1>Home</h1>
-        <Button target="userId" type="primary" title="Click para insertar nuevo aviso" />
-        <CardDeck>
-          {reactPlaylists}
-        </CardDeck>
-        <img border="0" alt="ProfilePic" src={imageUrl} width="100" height="100"></img>
-        
+        <div className="form-container">
+          
+        </div>
+        <div className="card-deck-container">
+          <CardDeck>
+            {reactPlaylists}
+          </CardDeck>
+        </div>
         
       </div>
     );

@@ -77,7 +77,9 @@ const Navbar = ({ loggedIn }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <Status loggedIn={loggedIn} />
     <span className="navbar-brand" href="#">
-      <NavLink to="/">Brand</NavLink>
+<NavLink to="/">{ loggedIn ? <img id="profile-pic" alt="ProfilePic" src={Meteor.user().profile.images[0].url} width="50rem" height="50rem"></img>
+                            : ""
+      }</NavLink>
     </span>
     <button
       className="navbar-toggler"

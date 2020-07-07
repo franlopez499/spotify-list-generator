@@ -6,13 +6,10 @@ export default class Playlist extends React.Component {
     constructor(props){
        super(props);
         this.state = {
-            foto: "",
             
         };
   }
  
-
-  
   
   componentDidMount(){
     
@@ -20,11 +17,7 @@ export default class Playlist extends React.Component {
   
  
   render() {
-    //const position = [this.state.lat, this.state.lng];
-    
-    
     return (
-
         <Card>
         <Card.Img variant="top" src={this.props.image} />
         <Card.Body>
