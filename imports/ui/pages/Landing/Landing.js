@@ -28,7 +28,6 @@ class Landing extends React.Component {
     }
     return (
       <div className="landing-page">
-          
         <h1>Landing Page</h1>
       </div>
     );

@@ -7,11 +7,11 @@ export const Points =  new Mongo.Collection('points');
 
 if(Meteor.isServer){
     // Server publica points para que se pueda suscribir clientes
-    Meteor.publish('points', function pointsPublication(){
-        return Points.find({
-          });
+    Meteor.publish('points', () => {
+        return Points.find({});
     });
 }
+
 
 Meteor.methods({
     'points.insert'(lat, lng, descripcion, imageUrl){
@@ -42,10 +42,7 @@ Meteor.methods({
     'points.remove'(pointId){
         check(pointId, String);
         const point = Points.findOne(pointId); //TODOOOO
-        if (task.owner !== this.userId) { // || admin ???
-            // make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
+
  
         Points.remove(pointId);
     },

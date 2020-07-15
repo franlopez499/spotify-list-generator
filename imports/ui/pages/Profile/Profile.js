@@ -4,33 +4,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CardDeck, Button, Form } from 'react-bootstrap';
 
-// collection
-//import { Points } from '../../../api/points/points';
-// import '../../../api/spotify/spotify.js';
-// remote example (if using ddp)
-
-// components
-//import Modal, { Button } from '../../components/Modal/Modal';
-//import { Button } from '../../components/ModalInput/ModalInput'
-
 import './Profile.scss';
 import Playlist from '../../components/Playlist';
+
 class Profile extends React.Component {
-  
 
   constructor(props) {
     super(props);
-     
+
     this.state = {
       playlists: [],
       password: '',
       errMsg: null,
     };
     
-    
+        
   }
   componentDidMount() {
-    if (!this.props.loggedIn) {
+    if (!this.props.loggedIn) {//
       return this.props.history.push('/login');
     }
     this.getPlaylist();
@@ -60,7 +51,6 @@ class Profile extends React.Component {
       let self = this;
       Meteor.call('getPlaylists', function (error, result) {
          self.setState({playlists: result});
-        
       });
 
    
@@ -83,9 +73,7 @@ class Profile extends React.Component {
     const reactPlaylists = this.getReactPlaylists();
     return (
       <div className="home-page">
-        <div className="form-container">
-          
-        </div>
+        
         <div className="card-deck-container">
           <CardDeck>
             {reactPlaylists}
@@ -116,9 +104,9 @@ export default withTracker(() => {
 
   return {
     // Encontramos en MongoDB todos ({}) y se puede filtrar con predicate o hacer sort
-    //points: Points.find({}, { sort: { createdAt: -1 } }).fetch(),
     // selecciona las tareas que no tienen a true checked y las cuenta
-
+    
+    //points: Points.find({}, { sort: { createdAt: -1 } }).fetch(),
     currentUser: Meteor.user(),
 
   };

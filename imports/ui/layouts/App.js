@@ -16,6 +16,8 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Profile from '../pages/Profile';
 import NotFound from '../pages/Not-Found';
+import Mixer from '../pages/Mixer';
+
 import RecoverPassword from '../pages/RecoverPassword';
 import ResetPassword from '../pages/ResetPassword';
 
@@ -35,6 +37,7 @@ const App = props => (
         <PropsRoute path="/signup" component={Signup} {...props} />
         <PropsRoute exact path="/profile" component={Profile} {...props} />
         <PropsRoute exact path="/profile/:_id" component={Profile} {...props} />
+        <PropsRoute exact path="/mixer" component={Mixer} {...props} />
         <PropsRoute
           path="/recover-password"
           component={RecoverPassword}

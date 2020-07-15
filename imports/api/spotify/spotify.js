@@ -19,7 +19,7 @@ Meteor.methods({
         if (checkTokenRefreshed(response, spotifyApi)) {
             var response = spotifyApi.getPlaylist(Meteor.user().services.spotify.id, playlistId, {})
         }
-        return response.data.body
+        return response.data.body;
     },
     getPlaylistTracks: function (playlistId) {
         var spotifyApi = new SpotifyWebApi()
@@ -27,7 +27,7 @@ Meteor.methods({
         if (checkTokenRefreshed(response, spotifyApi)) {
             var response = spotifyApi.getPlaylistTracks(Meteor.user().services.spotify.id, playlistId, {})
         }
-        return response.data
+        return response.data;
     },
     getUser: function () {
         var spotifyApi = new SpotifyWebApi()
