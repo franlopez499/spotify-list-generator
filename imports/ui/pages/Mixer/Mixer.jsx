@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form } from 'react-bootstrap';
-
+import { Button, Form, Card } from 'react-bootstrap';
+import { Session } from 'meteor/session'
+ 
 class Mixer extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,7 @@ class Mixer extends React.Component {
     this.state = {
       playlists: [],
       checkboxMap: new Map(),
+      created: false,
     };
   }
   componentDidMount() {
@@ -60,22 +62,42 @@ class Mixer extends React.Component {
     this.setState({
       checkboxMap: map,
     });   
-    console.log(this.state);
   }
 
+  createRandom(nuevaPlaylist){
+    const mixedPlaylist = [];
+    let length = Math.floor(nuevaPlaylist.length / 2);
+    const seen = new Set();
+    while (length) {
+      let index = Math.floor(Math.random() * nuevaPlaylist.length);  
+      if(seen[nuevaPlaylist[index]]) continue;
+      mixedPlaylist.push(nuevaPlaylist[index]);
+      seen.add(nuevaPlaylist[index]);
+      length--;
+    }
+    return mixedPlaylist;
+  }
   handleButtonClick(e){
     e.preventDefault();
     const { checkboxMap, playlists } = this.state;
-    const playlistsTrue = Array.from(checkboxMap).filter( obj => obj[1]); 
-    
-    const aux = playlists.filter(p => playlistsTrue.find(pT => p.name === pT[0])).map( p => p.id);
-    const nuevaPlaylist = [];
-    for (let i = 0; i< aux.length; ++i) {
-      Meteor.call('getPlaylistTracks', aux[i], (error, result) => { nuevaPlaylist.push(...result.map( r => r.track));});
-    }
-    console.log(nuevaPlaylist);
+    const playlistsTrue = Array.from(checkboxMap).filter(obj => obj[1]);
 
+    const aux = playlists
+      .filter(p => playlistsTrue.find(pT => p.name === pT[0]))
+      .map(p => p.id);
+
+      console.log(`Cogemos ${aux.length} listas`);
+
+    Meteor.call('getPlaylistTracksAndMix', ...aux, (error, result) => {
+      if(!error){
+        Meteor.call('createPlaylistAndAddTracks', result, 'Ultimate', (err, res) =>{
+          console.log('Playlist creada!');
+          this.setState({ created : true});
+        });
+      }
+    });
     
+
   }
 
   render() {
@@ -95,8 +117,11 @@ class Mixer extends React.Component {
             {checkboxes}
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.handleButtonClick.bind(this)}>
-            Submit
+            Crear playlist aleatoria
           </Button>
+          {
+            this.state.created ? <h1>Playlist Creada</h1> : ''
+          }
         </Form>
       </div>
     );
